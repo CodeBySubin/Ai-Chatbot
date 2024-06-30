@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'package:chatbot/Resource/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/snackbar/snackbar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 saveObject(String key, value) async {
@@ -19,13 +22,15 @@ getSavedObject(String key) async {
   return data != null ? json.decode(data) : null;
 }
 
-showToast(String message) {
-  Fluttertoast.showToast(
-      msg: message,
-      toastLength: Toast.LENGTH_LONG,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIosWeb: 1,
-      backgroundColor: colorPrimary,
-      textColor: Colors.white,
-      fontSize: 16.0);
+void showSnackbar(String message) {
+  Get.snackbar(
+    'Error',
+    message,
+    snackPosition: SnackPosition.BOTTOM,
+    backgroundColor: colorPrimary,
+    colorText: Colors.white,
+    borderRadius: 10,
+    margin: const EdgeInsets.all(40),
+    duration: const Duration(seconds: 3),
+  );
 }

@@ -4,7 +4,7 @@ import 'package:chatbot/Controller.dart/ChatController.dart';
 import 'package:chatbot/Resource/colors.dart';
 import 'package:chatbot/Utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/simple/get_state.dart';
+import 'package:get/get.dart';
 
 class ChatPage extends StatelessWidget {
   static const routeName = '/chat';
@@ -15,9 +15,15 @@ class ChatPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: const Icon(
-            Icons.arrow_back,
-            color: colorPrimary,
+          surfaceTintColor: Colors.transparent,
+          leading: InkWell(
+            onTap: () {
+              Get.back();
+            },
+            child: const Icon(
+              Icons.arrow_back,
+              color: colorPrimary,
+            ),
           ),
           backgroundColor: Colors.white,
           shape: const RoundedRectangleBorder(
@@ -27,7 +33,7 @@ class ChatPage extends StatelessWidget {
           ),
           centerTitle: true,
           title: const Text(
-            "BOBO",
+            "BOB",
             style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontFamily: 'Poppins-Regular',
@@ -115,12 +121,23 @@ class ChatPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           IconButton(
-                            icon: const Icon(
-                              Icons.attach_file,
-                              color: colorPrimary,
-                            ),
-                            onPressed: () {},
-                          ),
+                              icon: Icon(
+                                chatController.speechToText.isListening
+                                    ? Icons.stop
+                                    : Icons.mic,
+                                color: colorPrimary,
+                              ),
+                              onPressed: () async {
+                                chatController.flutterTts.stop();
+                                if (await chatController
+                                        .speechToText.hasPermission &&
+                                    chatController
+                                        .speechToText.isNotListening) {
+                                  await chatController.startListening();
+                                } else {
+                                  chatController.initSpeechToText();
+                                }
+                              }),
                           IconButton(
                             icon: const Icon(
                               Icons.send,
@@ -128,7 +145,7 @@ class ChatPage extends StatelessWidget {
                             ),
                             onPressed: () {
                               if (chatController.chatController.text.isEmpty) {
-                                showToast("Please enter a message");
+                                showSnackbar("Please enter a message");
                               } else {
                                 chatController.sendMessage();
                               }

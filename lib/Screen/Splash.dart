@@ -11,12 +11,11 @@ class Splash extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Timer(Duration(seconds: 5), () async {
+    Timer(const Duration(seconds: 5), () async {
       var intro = await getSavedObject("introscreen");
-
       Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (BuildContext context) =>
-              intro==null ? IntroScreen() : HomePage()));
+              intro == null ? const IntroScreen() : const HomePage()));
     });
     return Scaffold(
         body: Center(child: Lottie.asset('assets/image/bot_animation.json')));
