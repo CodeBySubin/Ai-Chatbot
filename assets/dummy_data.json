@@ -1,0 +1,11 @@
+[
+    {
+      "svgImagePath": "assets/image/write_and_edit.svg",
+      "strings": ["Item 1", "Item 2", "Item 3"]
+    },
+    {
+      "svgImagePath": "assets/image/your_svg_image.svg",
+      "strings": ["String 1", "String 2"]
+    }
+  ]
+  

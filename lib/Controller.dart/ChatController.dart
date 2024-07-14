@@ -22,6 +22,8 @@ class ChatController extends GetxController {
   final SpeechToText speechToText = SpeechToText();
   bool isListening = false;
   bool isSpeaking = false;
+  bool chatstatus = false;
+  bool value = true;
 
   String lastWords = '';
 
@@ -50,6 +52,11 @@ class ChatController extends GetxController {
     });
   }
 
+  void createToggle() {
+    value = !value;
+    update();
+  }
+
   Future<void> initSpeechToText() async {
     await speechToText.initialize(
       options: [SpeechToText.webDoNotAggregate],
@@ -71,6 +78,7 @@ class ChatController extends GetxController {
         onResult: onSpeechResult,
         listenFor: const Duration(seconds: 5),
       );
+      update();
     }
   }
 
@@ -117,6 +125,7 @@ class ChatController extends GetxController {
 
   void sendMessage() async {
     if (chatController.text.isNotEmpty) {
+      chatstatus = true;
       String messageText = chatController.text;
       chatController.clear();
       update();
@@ -129,7 +138,6 @@ class ChatController extends GetxController {
       chatHistory.add(chatModel);
       chatBox.add(chatModel);
       update();
-      scrollController.jumpTo(scrollController.position.maxScrollExtent);
       await getAnswer(messageText);
     }
   }
@@ -140,13 +148,16 @@ class ChatController extends GetxController {
       var content = Content.text(text);
       response = await chat.sendMessage(content);
       if (response.text != null && response.text!.isNotEmpty) {
+        chatstatus = false;
         final chatModel = ChatModel(
           DateTime.now().toString(),
           response.text.toString(),
           false,
           false,
         );
+        if(value){
         await systemSpeak(response.text.toString().replaceAll('*', ''));
+        }
         chatHistory.add(chatModel);
         chatBox.add(chatModel);
         update();

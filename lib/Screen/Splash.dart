@@ -1,23 +1,25 @@
 import 'dart:async';
-
-import 'package:chatbot/Screen/Homepage.dart';
+import 'package:chatbot/Screen/chatpage.dart';
 import 'package:chatbot/Screen/intro_screen.dart';
-import 'package:chatbot/Utils/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
+import 'package:chatbot/Resource/colors.dart';
+import 'package:chatbot/Utils/utils.dart';
 
 class Splash extends StatelessWidget {
   const Splash({super.key});
+  static const routeName = '/splash';
 
   @override
   Widget build(BuildContext context) {
     Timer(const Duration(seconds: 5), () async {
       var intro = await getSavedObject("introscreen");
-      Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (BuildContext context) =>
-              intro == null ? const IntroScreen() : const HomePage()));
+      Navigator.of(context).pushReplacementNamed(
+        intro == null ? IntroScreen.routeName : ChatPage.routeName,
+      );
     });
     return Scaffold(
-        body: Center(child: Lottie.asset('assets/image/bot_animation.json')));
+      backgroundColor: colorPrimary,
+      body: Center(child: Image.asset("assets/image/chatbot_logo.png")),
+    );
   }
 }

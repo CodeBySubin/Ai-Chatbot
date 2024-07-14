@@ -1,6 +1,4 @@
-import 'dart:io';
 
-import 'package:chatbot/Controller.dart/ChatController.dart';
 import 'package:chatbot/Screen/Homepage.dart';
 import 'package:chatbot/Screen/Splash.dart';
 import 'package:chatbot/Screen/chatpage.dart';
@@ -28,15 +26,12 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      initialRoute: HomePage.routeName,
+      initialRoute: Splash.routeName,
       routes: {
-        HomePage.routeName: (context) => const Splash(),
+        Splash.routeName: (context) => const Splash(),
+        IntroScreen.routeName: (context) => const IntroScreen(),
         ChatPage.routeName: (context) => const ChatPage(),
       },
     );
   }
 }
-
-
-
-
