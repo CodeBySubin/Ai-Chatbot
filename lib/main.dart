@@ -26,10 +26,10 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      initialRoute: Splash.routeName,
+      initialRoute: IntroScreen.routeName,
       routes: {
         Splash.routeName: (context) => const Splash(),
-        IntroScreen.routeName: (context) => const IntroScreen(),
+        IntroScreen.routeName: (context) =>  IntroScreen(),
         ChatPage.routeName: (context) => const ChatPage(),
       },
     );

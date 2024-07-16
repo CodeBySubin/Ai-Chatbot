@@ -3,10 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
-void main() async {
-  runApp(const MaterialApp(home: QuestionItems()));
-}
-
 class DataItem {
   final String svgImagePath;
   final List<String> strings;
@@ -88,14 +84,9 @@ class Prequestion extends StatelessWidget {
               itemBuilder: (context, i) {
                 return GestureDetector(
                   onTap: () async {
+                    print("here");
                     controller.chatController.text = dataItem.strings[i];
-                    if (await controller.speechToText.hasPermission &&
-                        controller.speechToText.isNotListening) {
-                      await controller.startListening();
-                    } else {
-                      controller.sendMessage();
-                      controller.initSpeechToText();
-                    }
+                    controller.sendMessage();
                   },
                   child: Container(
                     height: 50,

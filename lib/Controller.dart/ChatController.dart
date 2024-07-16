@@ -16,6 +16,7 @@ class ChatController extends GetxController {
   var chatHistory = <ChatModel>[].obs;
   late Box<ChatModel> chatBox;
   final flutterTts = FlutterTts();
+  final FocusNode focusNode = FocusNode();
   late final GenerativeModel model;
   late final GenerativeModel visionModel;
   late final ChatSession chat;
@@ -155,8 +156,8 @@ class ChatController extends GetxController {
           false,
           false,
         );
-        if(value){
-        await systemSpeak(response.text.toString().replaceAll('*', ''));
+        if (value) {
+          await systemSpeak(response.text.toString().replaceAll('*', ''));
         }
         chatHistory.add(chatModel);
         chatBox.add(chatModel);
@@ -164,9 +165,14 @@ class ChatController extends GetxController {
         scrollController.jumpTo(scrollController.position.maxScrollExtent);
       } else {
         showSnackbar("AI did not return any text.");
+        chatstatus = false;
+        update();
       }
     } catch (e) {
+      print(e);
       showSnackbar(e.toString());
+      chatstatus = false;
+      update();
     }
   }
 }
