@@ -123,6 +123,14 @@ class ChatController extends GetxController {
     flutterTts.stop();
     super.onClose();
   }
+  
+  Future<void> stopSpeaking() async {
+    if (isSpeaking) {
+      await flutterTts.stop();
+      isSpeaking = false;
+      update();
+    }
+  }
 
   void sendMessage() async {
     if (chatController.text.isNotEmpty) {
@@ -169,7 +177,6 @@ class ChatController extends GetxController {
         update();
       }
     } catch (e) {
-      print(e);
       showSnackbar(e.toString());
       chatstatus = false;
       update();

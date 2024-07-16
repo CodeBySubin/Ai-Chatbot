@@ -18,9 +18,6 @@ class ChatPage extends StatelessWidget {
     return GetBuilder<ChatController>(
       init: ChatController(),
       initState: (_) {},
-      didChangeDependencies: (state) {
-        
-      },
       builder: (chatController) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
           if (chatController.scrollController.hasClients) {
@@ -76,7 +73,10 @@ class ChatPage extends StatelessWidget {
                         child: Row(
                           children: [
                             GestureDetector(
-                              onTap: () => chatController.createToggle(),
+                              onTap: () {
+                                chatController.createToggle();
+                                chatController.stopSpeaking();
+                              },
                               child: Icon(
                                 chatController.value
                                     ? Icons.volume_up
@@ -362,7 +362,10 @@ class ChatPage extends StatelessWidget {
                               height: 20,
                             ),
                             GestureDetector(
-                              onTap: () => chatController.createToggle(),
+                              onTap: () {
+                                chatController.createToggle();
+                                chatController.stopSpeaking();
+                              },
                               child: Icon(
                                 chatController.value
                                     ? Icons.volume_up
@@ -376,7 +379,6 @@ class ChatPage extends StatelessWidget {
                     Expanded(
                       child: Stack(
                         children: [
-                         
                           Padding(
                               padding:
                                   const EdgeInsets.only(top: 0, bottom: 50),
@@ -590,7 +592,7 @@ class ChatPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                           Positioned(
+                          Positioned(
                             top: 5,
                             right: 5,
                             child: InkWell(
