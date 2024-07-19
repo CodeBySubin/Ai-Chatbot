@@ -1,4 +1,5 @@
 import 'package:chatbot/Controller.dart/ChatController.dart';
+import 'package:chatbot/Resource/Strings.dart';
 import 'package:chatbot/Resource/colors.dart';
 import 'package:chatbot/Screen/Homepage.dart';
 import 'package:chatbot/Utils/utils.dart';
@@ -22,7 +23,7 @@ class IntroScreen extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  const Text("Your AI Assistant",
+                  const Text(Strings.yourAssistant,
                       style: TextStyle(
                           color: colorPrimary,
                           fontFamily: 'Poppins-Regular',
@@ -32,13 +33,12 @@ class IntroScreen extends StatelessWidget {
                     height: 40,
                   ),
                   const Text(
+                    Strings.description,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.black,
                         fontFamily: 'Poppins-Regular',
                         fontSize: 15),
-                    "Welcome to AI Chatbot app.\n Ask questions and receive articles on various topics.\n Features include speech to text and text to speech for\n natural and convenient interaction.",
-                    // "Using this software, you can ask your\nquestions and receive articles using\nartificial intelligence assistant"
                   ),
                   const SizedBox(
                     height: 60,
@@ -63,7 +63,7 @@ class IntroScreen extends StatelessWidget {
                       Navigator.pushNamed(context, '/chat');
                     },
                     child: const Text(
-                      "Continue",
+                      Strings.Continue,
                       style: TextStyle(color: Colors.white, fontSize: 18),
                     ),
                   ),

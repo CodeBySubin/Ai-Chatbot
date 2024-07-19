@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:chatbot/Utils/utils.dart';
 import 'package:chatbot/model/model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
@@ -25,12 +26,12 @@ class ChatController extends GetxController {
   bool isSpeaking = false;
   bool chatstatus = false;
   bool value = true;
-
   String lastWords = '';
 
   @override
   void onInit() {
     super.onInit();
+    String apiKey = dotenv.env['ApiKey'].toString();
     initSpeechToText();
     initTextToSpeech();
     flutterTts.setCompletionHandler(() {
@@ -39,12 +40,13 @@ class ChatController extends GetxController {
     });
     model = GenerativeModel(
       model: 'gemini-pro',
-      apiKey: 'AIzaSyA5WsZn0bhGR5hHmDMshhBtU2_Itw5FBRY',
+      apiKey:apiKey,
     );
     visionModel = GenerativeModel(
       model: 'gemini-pro-vision',
-      apiKey: 'AIzaSyA5WsZn0bhGR5hHmDMshhBtU2_Itw5FBRY',
+      apiKey:apiKey,
     );
+    print('aaapi   $apiKey');
     chat = model.startChat();
     Hive.openBox<ChatModel>('chatBox').then((box) {
       chatBox = box;
@@ -123,7 +125,7 @@ class ChatController extends GetxController {
     flutterTts.stop();
     super.onClose();
   }
-  
+
   Future<void> stopSpeaking() async {
     if (isSpeaking) {
       await flutterTts.stop();
@@ -133,6 +135,7 @@ class ChatController extends GetxController {
   }
 
   void sendMessage() async {
+    stopSpeaking();
     if (chatController.text.isNotEmpty) {
       chatstatus = true;
       String messageText = chatController.text;
@@ -165,7 +168,8 @@ class ChatController extends GetxController {
           false,
         );
         if (value) {
-          await systemSpeak(response.text.toString().replaceAll('*', ''));
+          await systemSpeak(
+              response.text.toString().replaceAll(RegExp(r'[*@`()]'), ''));
         }
         chatHistory.add(chatModel);
         chatBox.add(chatModel);

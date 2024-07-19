@@ -1,4 +1,5 @@
 import 'package:chatbot/Controller.dart/ChatController.dart';
+import 'package:chatbot/Resource/Strings.dart';
 import 'package:chatbot/Resource/colors.dart';
 import 'package:chatbot/Screen/Widgets/prequestionWidget.dart';
 import 'package:chatbot/Utils/utils.dart';
@@ -20,10 +21,13 @@ class ChatPage extends StatelessWidget {
       initState: (_) {},
       builder: (chatController) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          if (chatController.scrollController.hasClients) {
-            chatController.scrollController.jumpTo(
-              chatController.scrollController.position.maxScrollExtent,
-            );
+          if (chatController.scrollController.offset !=
+              chatController.scrollController.position.maxScrollExtent) {
+            if (chatController.scrollController.hasClients) {
+              chatController.scrollController.jumpTo(
+                chatController.scrollController.position.maxScrollExtent,
+              );
+            }
           }
           chatController.focusNode.requestFocus();
         });
@@ -58,7 +62,7 @@ class ChatPage extends StatelessWidget {
                           width: 10,
                         ),
                         const Text(
-                          "Nemo",
+                          Strings.appname,
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18,
@@ -174,7 +178,7 @@ class ChatPage extends StatelessWidget {
                                 },
                               )
                             : const Padding(
-                                padding: EdgeInsets.only(top: 10, bottom: 20),
+                                padding: EdgeInsets.only(top: 0, bottom: 20),
                                 child: QuestionItems(),
                               )),
                     Align(
@@ -215,89 +219,101 @@ class ChatPage extends StatelessWidget {
                           child: Padding(
                             padding: const EdgeInsets.all(0.0),
                             child: TextFormField(
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Poppins-Regular',
-                              ),
-                              controller: chatController.chatController,
-                              decoration: InputDecoration(
-                                  hintText: "Write your message",
-                                  hintStyle: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'Poppins-Regular',
-                                      color: Colors.grey),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderSide:
-                                        const BorderSide(color: Colors.white),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  filled: true,
-                                  fillColor: Colors.white,
-                                  hoverColor: Colors.transparent,
-                                  focusColor: Colors.white,
-                                  contentPadding: const EdgeInsets.symmetric(
-                                    horizontal: 20.0,
-                                    vertical: 15.0,
-                                  ),
-                                  suffixIcon: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      IconButton(
-                                        icon: SvgPicture.asset(
-                                          chatController.isListening
-                                              ? 'assets/image/mic.svg'
-                                              : 'assets/image/micoff.svg',
-                                          color: colorPrimary,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Poppins-Regular',
+                                ),
+                                controller: chatController.chatController,
+                                decoration: InputDecoration(
+                                    hintText: Strings.writeMessage,
+                                    hintStyle: const TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'Poppins-Regular',
+                                        color: Colors.grey),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide:
+                                          const BorderSide(color: Colors.white),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide:
+                                          const BorderSide(color: Colors.white),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderSide:
+                                          const BorderSide(color: Colors.white),
+                                      borderRadius: BorderRadius.circular(20),
+                                    ),
+                                    filled: true,
+                                    fillColor: Colors.white,
+                                    hoverColor: Colors.transparent,
+                                    focusColor: Colors.white,
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 20.0,
+                                      vertical: 15.0,
+                                    ),
+                                    suffixIcon: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        IconButton(
+                                          icon: SvgPicture.asset(
+                                            chatController.isListening
+                                                ? 'assets/image/mic.svg'
+                                                : 'assets/image/micoff.svg',
+                                            color: colorPrimary,
+                                          ),
+                                          onPressed: () async {
+                                            if (chatController.chatstatus ==
+                                                false) {
+                                              if (await chatController
+                                                      .speechToText
+                                                      .hasPermission &&
+                                                  chatController.speechToText
+                                                      .isNotListening) {
+                                                await chatController
+                                                    .startListening();
+                                              } else {
+                                                chatController.sendMessage();
+                                                chatController
+                                                    .initSpeechToText();
+                                              }
+                                            }
+                                          },
                                         ),
-                                        onPressed: () async {
-                                          if (await chatController
-                                                  .speechToText.hasPermission &&
-                                              chatController.speechToText
-                                                  .isNotListening) {
-                                            await chatController
-                                                .startListening();
-                                          } else {
-                                            chatController.sendMessage();
-                                            chatController.initSpeechToText();
-                                          }
-                                        },
-                                      ),
-                                      IconButton(
-                                        icon: const Icon(
-                                          Icons.send,
-                                          color: colorPrimary,
-                                        ),
-                                        onPressed: () {
-                                          if (chatController
-                                              .chatController.text.isEmpty) {
-                                            showSnackbar(
-                                                "Please enter a message");
-                                          } else {
-                                            chatController.sendMessage();
-                                          }
-                                        },
-                                      ),
-                                    ],
-                                  )),
-                              onFieldSubmitted: (value) {
-                                if (chatController
-                                    .chatController.text.isEmpty) {
-                                  showSnackbar("Please enter a message");
-                                } else {
-                                  chatController.sendMessage();
-                                }
-                              },
-                            ),
+                                        IconButton(
+                                            icon: Icon(
+                                              chatController.chatstatus
+                                                  ? Icons.stop_circle
+                                                  : Icons.send,
+                                              color: colorPrimary,
+                                            ),
+                                            onPressed: () {
+                                              if (chatController.chatstatus ==
+                                                  false) {
+                                                if (chatController
+                                                    .chatController
+                                                    .text
+                                                    .isEmpty) {
+                                                  showSnackbar(
+                                                      Strings.enterMessage);
+                                                } else {
+                                                  chatController.sendMessage();
+                                                }
+                                              }
+                                            }),
+                                      ],
+                                    )),
+                                onFieldSubmitted: (value) {
+                                  if (chatController.chatstatus == false) {
+                                    if (chatController
+                                        .chatController.text.isEmpty) {
+                                      showSnackbar(Strings.enterMessage);
+                                    } else {
+                                      chatController.sendMessage();
+                                    }
+                                  }
+                                }),
                           ),
                         ),
                       ),
@@ -351,7 +367,7 @@ class ChatPage extends StatelessWidget {
                               width: 100,
                             ),
                             const Text(
-                              "Nemo",
+                              Strings.appname,
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 30,
@@ -381,7 +397,7 @@ class ChatPage extends StatelessWidget {
                         children: [
                           Padding(
                               padding:
-                                  const EdgeInsets.only(top: 0, bottom: 50),
+                                  const EdgeInsets.only(top: 50, bottom: 50),
                               child: chatController.chatHistory.isNotEmpty
                                   ? ListView.builder(
                                       itemCount:
@@ -503,7 +519,7 @@ class ChatPage extends StatelessWidget {
                                     ),
                                     controller: chatController.chatController,
                                     decoration: InputDecoration(
-                                        hintText: "Write your message",
+                                        hintText: Strings.writeMessage,
                                         hintStyle: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             fontFamily: 'Poppins-Regular',
@@ -546,45 +562,58 @@ class ChatPage extends StatelessWidget {
                                                 color: colorPrimary,
                                               ),
                                               onPressed: () async {
-                                                if (await chatController
-                                                        .speechToText
-                                                        .hasPermission &&
-                                                    chatController.speechToText
-                                                        .isNotListening) {
-                                                  await chatController
-                                                      .startListening();
-                                                } else {
-                                                  chatController.sendMessage();
-                                                  chatController
-                                                      .initSpeechToText();
+                                                if (chatController.chatstatus ==
+                                                    false) {
+                                                  if (await chatController
+                                                          .speechToText
+                                                          .hasPermission &&
+                                                      chatController
+                                                          .speechToText
+                                                          .isNotListening) {
+                                                    await chatController
+                                                        .startListening();
+                                                  } else {
+                                                    chatController
+                                                        .sendMessage();
+                                                    chatController
+                                                        .initSpeechToText();
+                                                  }
                                                 }
                                               },
                                             ),
                                             IconButton(
-                                              icon: const Icon(
-                                                Icons.send,
+                                              icon: Icon(
+                                                chatController.chatstatus
+                                                    ? Icons.stop_circle
+                                                    : Icons.send,
                                                 color: colorPrimary,
                                               ),
                                               onPressed: () {
-                                                if (chatController
-                                                    .chatController
-                                                    .text
-                                                    .isEmpty) {
-                                                  showSnackbar(
-                                                      "Please enter a message");
-                                                } else {
-                                                  chatController.sendMessage();
+                                                if (chatController.chatstatus ==
+                                                    false) {
+                                                  if (chatController
+                                                      .chatController
+                                                      .text
+                                                      .isEmpty) {
+                                                    showSnackbar(
+                                                        Strings.enterMessage);
+                                                  } else {
+                                                    chatController
+                                                        .sendMessage();
+                                                  }
                                                 }
                                               },
                                             ),
                                           ],
                                         )),
                                     onFieldSubmitted: (value) {
-                                      if (chatController
-                                          .chatController.text.isEmpty) {
-                                        showSnackbar("Please enter a message");
-                                      } else {
-                                        chatController.sendMessage();
+                                      if (chatController.chatstatus == false) {
+                                        if (chatController
+                                            .chatController.text.isEmpty) {
+                                          showSnackbar(Strings.enterMessage);
+                                        } else {
+                                          chatController.sendMessage();
+                                        }
                                       }
                                     },
                                   ),
