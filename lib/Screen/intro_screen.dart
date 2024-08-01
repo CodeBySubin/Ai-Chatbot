@@ -60,7 +60,11 @@ class IntroScreen extends StatelessWidget {
                           MaterialStateProperty.all<Color>(colorPrimary),
                     ),
                     onPressed: () async {
-                      Navigator.pushNamed(context, '/chat');
+                      Navigator.pushNamedAndRemoveUntil(
+                        context,
+                        '/chat',
+                        ModalRoute.withName('/'),
+                      );
                     },
                     child: const Text(
                       Strings.Continue,

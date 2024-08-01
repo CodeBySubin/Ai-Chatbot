@@ -4,12 +4,10 @@ import 'package:chatbot/Screen/chatpage.dart';
 import 'package:chatbot/Screen/intro_screen.dart';
 import 'package:chatbot/model/model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
-  await dotenv.load(fileName: ".env");
   await Hive.initFlutter();
   Hive.registerAdapter(ChatModelAdapter());
   runApp(const MyApp());
@@ -27,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         useMaterial3: true,
       ),
-      initialRoute: IntroScreen.routeName,
+      initialRoute: Splash.routeName,
       routes: {
         Splash.routeName: (context) => const Splash(),
         IntroScreen.routeName: (context) => IntroScreen(),

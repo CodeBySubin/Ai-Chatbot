@@ -1,13 +1,10 @@
-import 'dart:io';
 import 'package:chatbot/Utils/utils.dart';
 import 'package:chatbot/model/model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 
@@ -31,7 +28,6 @@ class ChatController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    String apiKey = dotenv.env['ApiKey'].toString();
     initSpeechToText();
     initTextToSpeech();
     flutterTts.setCompletionHandler(() {
@@ -40,13 +36,12 @@ class ChatController extends GetxController {
     });
     model = GenerativeModel(
       model: 'gemini-pro',
-      apiKey:apiKey,
+      apiKey:"AIzaSyA5WsZn0bhGR5hHmDMshhBtU2_Itw5FBRY",
     );
     visionModel = GenerativeModel(
       model: 'gemini-pro-vision',
-      apiKey:apiKey,
+      apiKey:"AIzaSyA5WsZn0bhGR5hHmDMshhBtU2_Itw5FBRY",
     );
-    print('aaapi   $apiKey');
     chat = model.startChat();
     Hive.openBox<ChatModel>('chatBox').then((box) {
       chatBox = box;
