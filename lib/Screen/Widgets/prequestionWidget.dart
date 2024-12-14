@@ -22,7 +22,7 @@ class QuestionItems extends StatelessWidget {
       DataItem(
         svgImagePath: "assets/image/explane.svg",
         strings: [
-          "Explain Quantum physics",
+          "Who developed quantum physics",
           "What are wormholes explain like i am 5",
         ],
       ),
@@ -31,7 +31,7 @@ class QuestionItems extends StatelessWidget {
         strings: [
           "Write a tweet about global warming",
           "Write a poem about flower and love",
-          "Write a rap song lyrics about"
+          "Can you write rap song lyrics about the sun"
         ],
       ),
       DataItem(
