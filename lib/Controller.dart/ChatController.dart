@@ -36,11 +36,11 @@ class ChatController extends GetxController {
     });
     model = GenerativeModel(
       model: 'gemini-pro',
-      apiKey:"AIzaSyA5WsZn0bhGR5hHmDMshhBtU2_Itw5FBRY",
+      apiKey:"AIzaSyC38PyxrWVjOZcI9FTINapAvWv5uYAhW10",
     );
     visionModel = GenerativeModel(
       model: 'gemini-pro-vision',
-      apiKey:"AIzaSyA5WsZn0bhGR5hHmDMshhBtU2_Itw5FBRY",
+      apiKey:"AIzaSyC38PyxrWVjOZcI9FTINapAvWv5uYAhW10",
     );
     chat = model.startChat();
     Hive.openBox<ChatModel>('chatBox').then((box) {
@@ -176,6 +176,7 @@ class ChatController extends GetxController {
         update();
       }
     } catch (e) {
+      print(e.toString());
       showSnackbar(e.toString());
       chatstatus = false;
       update();
