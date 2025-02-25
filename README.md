@@ -17,7 +17,7 @@ Nemo is a **Flutter** application that integrates **Google Gemini AI, Speech-to-
 
 ### Web
 
-<img src="https://drive.google.com/uc?export=view&id=https://drive.google.com/file/d/1s4pVgG05XJy7rvy9XxS_YYXlouxP915z/view?usp=sharing" width="600"/>
+<img src="https://drive.google.com/uc?export=view&id=1s4pVgG05XJy7rvy9XxS_YYXlouxP915z" width="600"/>
 
 ### App
 
