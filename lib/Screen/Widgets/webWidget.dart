@@ -129,7 +129,7 @@ class Web extends StatelessWidget {
                                   ),
                                   padding: const EdgeInsets.all(16),
                                   child: Text(
-                                    chat.message,
+                                    chat.message.replaceAll("*", ""),
                                     style: TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold,
