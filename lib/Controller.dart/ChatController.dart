@@ -36,7 +36,7 @@ class ChatController extends GetxController {
     });
     model = GenerativeModel(
       model: 'gemini-1.5-pro',
-      apiKey:"AIzaSyC38PyxrWVjOZcI9FTINapAvWv5uYAhW10",
+      apiKey: "AIzaSyC38PyxrWVjOZcI9FTINapAvWv5uYAhW10",
     );
     chat = model.startChat();
     Hive.openBox<ChatModel>('chatBox').then((box) {
