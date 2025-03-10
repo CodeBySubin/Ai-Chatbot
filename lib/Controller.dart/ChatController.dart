@@ -35,11 +35,7 @@ class ChatController extends GetxController {
       update();
     });
     model = GenerativeModel(
-      model: 'gemini-pro',
-      apiKey:"AIzaSyC38PyxrWVjOZcI9FTINapAvWv5uYAhW10",
-    );
-    visionModel = GenerativeModel(
-      model: 'gemini-pro-vision',
+      model: 'gemini-1.5-pro',
       apiKey:"AIzaSyC38PyxrWVjOZcI9FTINapAvWv5uYAhW10",
     );
     chat = model.startChat();
