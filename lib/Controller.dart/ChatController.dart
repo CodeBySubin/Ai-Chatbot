@@ -1,4 +1,5 @@
 import 'package:chatbot/Utils/utils.dart';
+import 'package:chatbot/apikey.dart';
 import 'package:chatbot/model/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -36,7 +37,7 @@ class ChatController extends GetxController {
     });
     model = GenerativeModel(
       model: 'gemini-1.5-pro',
-      apiKey: "AIzaSyC38PyxrWVjOZcI9FTINapAvWv5uYAhW10",
+      apiKey:ApiKeys.googleApiKey,
     );
     chat = model.startChat();
     Hive.openBox<ChatModel>('chatBox').then((box) {
