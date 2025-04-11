@@ -1,5 +1,5 @@
-import 'package:chatbot/Screen/Homepage.dart';
-import 'package:chatbot/Screen/Splash.dart';
+import 'package:chatbot/Screen/homepage.dart';
+import 'package:chatbot/Screen/splash.dart';
 import 'package:chatbot/Screen/chatpage.dart';
 import 'package:chatbot/Screen/intro_screen.dart';
 import 'package:chatbot/model/model.dart';

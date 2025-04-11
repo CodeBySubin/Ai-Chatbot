@@ -1,7 +1,7 @@
 import 'package:chatbot/Controller.dart/ChatController.dart';
 import 'package:chatbot/Resource/Strings.dart';
 import 'package:chatbot/Resource/colors.dart';
-import 'package:chatbot/Screen/Homepage.dart';
+import 'package:chatbot/Screen/homepage.dart';
 import 'package:chatbot/Utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
